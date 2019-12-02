@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <% for (var chunk of webpack.chunks) {
+         for (var file of chunk.files) {
+           if(file.match(/\.(js|css)$/)) { %>
+       <link rel="<%= chunk.initial? 'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file  %>" as="<%= file.match(/\.js$/)? 'script':'style' %>">
+    <%}}}%>
+  </head>
+  <body>
+    <noscript>
+      oops! I think the JavaScript failed to load.
+    </noscript>
+    <div id="root"></div>
+    <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
+  </body>
+</html>
